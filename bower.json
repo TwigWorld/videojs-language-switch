@@ -1,0 +1,14 @@
+{
+  "name": "videojs-language-switch",
+  "author": "Adam Oliver &lt;mail@adamoliver.net&gt;",
+  "license": "MIT",
+  "main": [
+    "dist/videojs-language-switch.css",
+    "dist/videojs-language-switch.min.js"
+  ],
+  "keywords": [
+    "videojs",
+    "videojs-plugin"
+  ]
+}
+
