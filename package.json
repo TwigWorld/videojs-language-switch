@@ -1,6 +1,6 @@
 {
   "name": "videojs-language-switch",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Control for switching between video language versions",
   "main": "es5/plugin.js",
   "generator-videojs-plugin": {
