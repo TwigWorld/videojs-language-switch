@@ -2,7 +2,7 @@ import videojs from 'video.js';
 
 // Default options for the plugin.
 const defaults = {
-  buttonClass: 'icon-globe'
+  buttonClass: 'vjs-icon-cog'
 };
 
 let containerDropdownElement;
@@ -46,39 +46,48 @@ const onLanguageSelect = (player, language) => {
  */
 const onPlayerReady = (player, options) => {
   containerDropdownElement = document.createElement('div');
-  containerDropdownElement.className = 'vjs-language-dropdown';
+  containerDropdownElement.className = 'vjs-menu';
 
   let containerElement = document.createElement('div');
 
-  containerElement.className = 'vjs-language-container';
+  containerElement.className = `vjs-menu-button vjs-menu-button-popup
+                                vjs-control vjs-button vjs-language-container`;
 
-  let buttonElement = document.createElement('button');
+  let menu = document.createElement('div');
 
-  buttonElement.className = `vjs-language-link ${options.buttonClass}`;
-  buttonElement.onclick = onToggleDropdown;
-  buttonElement.innerText = 'Language';
+  menu.className = 'vjs-menu';
 
   let ulElement = document.createElement('ul');
+
+  ulElement.className = 'vjs-menu-content';
 
   options.languages.map(function(language) {
     let liElement = document.createElement('li');
 
-    let linkElement = document.createElement('a');
+    liElement.innerText = language.name;
+    liElement.className = 'vjs-menu-item';
 
-    linkElement.innerText = language.name;
-    linkElement.setAttribute('href', '#');
-    linkElement.addEventListener('click', function() {
-      event.preventDefault();
+    liElement.addEventListener('click', function() {
       onLanguageSelect(player, language);
     });
 
-    liElement.appendChild(linkElement);
     ulElement.appendChild(liElement);
   });
 
+  let textElement = document.createElement('span');
+
+  textElement.innerText = 'Language';
+  textElement.className = 'vjs-control-text';
+
+  let iconElement = document.createElement('span');
+
+  iconElement.className = options.buttonClass;
+
   containerDropdownElement.appendChild(ulElement);
+
   containerElement.appendChild(containerDropdownElement);
-  containerElement.appendChild(buttonElement);
+  containerElement.appendChild(textElement);
+  containerElement.appendChild(iconElement);
 
   player.controlBar.el().insertBefore(
     containerElement,
