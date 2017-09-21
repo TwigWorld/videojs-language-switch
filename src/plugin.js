@@ -22,7 +22,16 @@ const onToggleDropdown = () => {
 /**
 * event on selected the language
 */
-const onLanguageSelect = (player, language) => {
+const onLanguageSelect = (player, language, selected) => {
+  const items = player.el().getElementsByClassName('vjs-language-switch-item');
+
+  Array.from(items).forEach((item) => {
+    item.classList.remove('vjs-selected');
+
+    if (item.innerHTML === language.name) {
+      item.classList.add('vjs-selected');
+    }
+  });
 
   let currentTime = player.currentTime();
 
@@ -65,10 +74,15 @@ const onPlayerReady = (player, options) => {
     let liElement = document.createElement('li');
 
     liElement.innerText = language.name;
-    liElement.className = 'vjs-menu-item';
 
-    liElement.addEventListener('click', function() {
-      onLanguageSelect(player, language);
+    if (language.name === options.defaultLanguage) {
+      liElement.className = 'vjs-menu-item vjs-selected vjs-language-switch-item';
+    } else {
+      liElement.className = 'vjs-menu-item vjs-language-switch-item';
+    }
+
+    liElement.addEventListener('click', function(el) {
+      onLanguageSelect(player, language, el.target);
     });
 
     ulElement.appendChild(liElement);
