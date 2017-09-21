@@ -62,3 +62,44 @@ QUnit.test('registers itself with video.js', function(assert) {
     'the menu item has a class of vjs-language-switch'
   );
 });
+
+QUnit.test('should select default language menu item', function(assert) {
+  assert.expect(2);
+
+  this.player.languageSwitch(testData);
+
+  // Tick the clock forward enough to trigger the player to be "ready".
+  this.clock.tick(1);
+
+  const menuItems = this.player.contentEl()
+    .getElementsByClassName('vjs-language-switch-item vjs-selected');
+
+  assert.equal(
+    menuItems.length, 1,
+    'there sould be only one selected item'
+  );
+
+  assert.equal(
+    menuItems[0].innerHTML, 'English',
+    'the menu item has correct language selected'
+  );
+});
+
+QUnit.test('should select language menu item on click', function(assert) {
+  assert.expect(1);
+
+  this.player.languageSwitch(testData);
+
+  // Tick the clock forward enough to trigger the player to be "ready".
+  this.clock.tick(1);
+
+  const notSelectedItem = this.player.contentEl()
+    .getElementsByClassName('vjs-language-switch-item')[1];
+
+  notSelectedItem.click();
+
+  assert.ok(
+    notSelectedItem.classList.contains('vjs-selected'),
+    'clicked menu item should have selected class'
+  );
+});
