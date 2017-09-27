@@ -103,3 +103,23 @@ QUnit.test('should select language menu item on click', function(assert) {
     'clicked menu item should have selected class'
   );
 });
+
+QUnit.test('should trigger \'changedlanguage\' event on language change',
+  function(assert) {
+    const done = assert.async();
+
+    this.player.on('changedlanguage', function(event, payload) {
+      assert.deepEqual(payload, testData.languages[1].sources, 'Passes languages as payload');
+      done();
+    });
+
+    this.player.languageSwitch(testData);
+
+    // Tick the clock forward enough to trigger the player to be "ready".
+    this.clock.tick(10);
+
+    const notSelectedItem = this.player.contentEl()
+      .getElementsByClassName('vjs-language-switch-item')[1];
+
+    notSelectedItem.click();
+  });
