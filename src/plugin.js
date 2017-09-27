@@ -39,6 +39,8 @@ const onLanguageSelect = (player, language, selected) => {
     return {src: src.src, type: src.type, res: src.res};
   }));
 
+  player.trigger('changedlanguage', language.sources);
+
   player.on('loadedmetadata', function() {
     player.currentTime(currentTime);
     player.play();
