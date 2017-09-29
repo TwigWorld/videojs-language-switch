@@ -39,7 +39,7 @@ QUnit.module('videojs-language-switch', {
 });
 
 QUnit.test('registers itself with video.js', function(assert) {
-  assert.expect(3);
+  assert.expect(4);
 
   assert.strictEqual(
     Player.prototype.languageSwitch,
@@ -60,6 +60,12 @@ QUnit.test('registers itself with video.js', function(assert) {
   assert.ok(
     this.player.contentEl().classList.contains('vjs-language-switch'),
     'the menu item has a class of vjs-language-switch'
+  );
+
+  assert.ok(
+    this.player.contentEl()
+      .getElementsByClassName('vjs-language-switch-button').length === 1,
+      'the button should have not editable class'
   );
 });
 

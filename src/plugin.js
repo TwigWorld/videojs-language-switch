@@ -46,7 +46,7 @@ const onLanguageSelect = (player, language, selected) => {
     player.play();
   });
 
-  onToggleDropdown();
+  containerDropdownElement.classList.remove('show');
 };
 
 /**
@@ -70,6 +70,15 @@ const onPlayerReady = (player, options) => {
 
   let ulElement = document.createElement('ul');
 
+  document.addEventListener('touchend', function(el) {
+    el.stopPropagation();
+    if (el.target.classList.contains('vjs-language-switch-button')) {
+      onToggleDropdown();
+    } else {
+      containerDropdownElement.classList.remove('show');
+    }
+  });
+
   ulElement.className = 'vjs-menu-content';
 
   options.languages.map(function(language) {
@@ -87,6 +96,10 @@ const onPlayerReady = (player, options) => {
       onLanguageSelect(player, language, el.target);
     });
 
+    liElement.addEventListener('touchstart', function(el) {
+      onLanguageSelect(player, language, el.target);
+    });
+
     ulElement.appendChild(liElement);
   });
 
@@ -97,7 +110,9 @@ const onPlayerReady = (player, options) => {
 
   let iconElement = document.createElement('span');
 
-  iconElement.className = options.buttonClass;
+  const defaultBtnClass = 'vjs-language-switch-button ';
+
+  iconElement.className = defaultBtnClass.concat(options.buttonClass);
 
   containerDropdownElement.appendChild(ulElement);
 
