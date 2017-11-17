@@ -35,8 +35,39 @@ const onLanguageSelect = (player, language, selected) => {
 
   let currentTime = player.currentTime();
 
-  player.src(language.sources.map(function(src) {
-    return {src: src.src, type: src.type, res: src.res};
+  const selectedCurrentSource = player.currentSources().filter((src) => {
+    if (src.selected) {
+      return src.selected === true;
+    }
+    return;
+  });
+
+  if (selectedCurrentSource.length) {
+    const currenSelectedType = selectedCurrentSource[0].type;
+    const currenSelectedQuality = selectedCurrentSource[0].label;
+
+    /* move selected src to the first place in the array */
+    /* because that the one which will be automaticaly played by the player */
+    const orderedSouces = language.sources;
+
+    language.sources.map((src, index) => {
+      if (src.label === currenSelectedQuality && src.type === currenSelectedType) {
+        const selectedSrc = orderedSouces.splice(index, 1);
+
+        orderedSouces.unshift(selectedSrc[0]);
+      }
+    });
+  }
+
+  player.src(language.sources.map(function(src, index) {
+    const defaultSrcData =
+    { src: src.src, type: src.type, res: src.res, label: src.label };
+
+    if (!selectedCurrentSource.length && index === 0) {
+      return Object.assign(defaultSrcData, { selected: true });
+    }
+
+    return defaultSrcData;
   }));
 
   player.trigger('changedlanguage', language.sources);
@@ -147,7 +178,7 @@ const languageSwitch = function(options) {
 };
 
 // Register the plugin with video.js.
-videojs.plugin('languageSwitch', languageSwitch);
+videojs.registerPlugin('languageSwitch', languageSwitch);
 
 // Include the version number.
 languageSwitch.VERSION = '__VERSION__';
