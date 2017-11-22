@@ -1,6 +1,6 @@
 {
   "name": "videojs-language-switch",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "Control for switching between video language versions",
   "main": "es5/plugin.js",
   "generator-videojs-plugin": {
@@ -77,7 +77,7 @@
   ],
   "dependencies": {
     "browserify-versionify": "^1.0.6",
-    "video.js": "^5.10.1"
+    "video.js": "^6.2.8"
   },
   "devDependencies": {
     "babel-cli": "^6.14.0",

@@ -1,5 +1,4 @@
 import document from 'global/document';
-
 import QUnit from 'qunit';
 import sinon from 'sinon';
 import videojs from 'video.js';
@@ -42,8 +41,8 @@ QUnit.test('registers itself with video.js', function(assert) {
   assert.expect(4);
 
   assert.strictEqual(
-    Player.prototype.languageSwitch,
-    plugin,
+    typeof Player.prototype.languageSwitch,
+    'function',
     'videojs-language-switch plugin was registered'
   );
 
@@ -115,7 +114,8 @@ QUnit.test('should trigger \'changedlanguage\' event on language change',
     const done = assert.async();
 
     this.player.on('changedlanguage', function(event, payload) {
-      assert.deepEqual(payload, testData.languages[1].sources, 'Passes languages as payload');
+      assert.deepEqual(payload,
+      testData.languages[1].sources, 'Passes languages as payload');
       done();
     });
 
@@ -129,3 +129,24 @@ QUnit.test('should trigger \'changedlanguage\' event on language change',
 
     notSelectedItem.click();
   });
+
+QUnit.test('should add selected attribute to selected/played src', function(assert) {
+  assert.expect(1);
+
+  this.player.languageSwitch(testData);
+
+  // Tick the clock forward enough to trigger the player to be "ready".
+  this.clock.tick(1);
+
+  const notSelectedItem = this.player.contentEl()
+    .getElementsByClassName('vjs-language-switch-item')[1];
+
+  notSelectedItem.click();
+
+  const slelectedSource = this.player.currentSources()[0].selected;
+
+  assert.ok(
+    slelectedSource, true,
+    'clicked menu item should add selected attribute'
+  );
+});
