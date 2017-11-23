@@ -4,6 +4,10 @@ class LanguageMenuItem extends MenuItem {
     constructor(player, options) {
     super(player, options);
 
+    console.log('item', options);
+
+    MenuItem.call(this, player, options);
+
     options.selectable = true;
 
     this.src = options.src;

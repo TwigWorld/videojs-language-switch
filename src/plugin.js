@@ -12,75 +12,75 @@ let containerDropdownElement;
 /**
 * show or hide the dropdown
 */
-const onToggleDropdown = () => {
-  if (containerDropdownElement.className.indexOf('show') === -1) {
-    containerDropdownElement.className += ' show';
-  } else {
-    containerDropdownElement.className = containerDropdownElement.className
-                                            .replace(' show', '');
-  }
-};
+// const onToggleDropdown = () => {
+//   if (containerDropdownElement.className.indexOf('show') === -1) {
+//     containerDropdownElement.className += ' show';
+//   } else {
+//     containerDropdownElement.className = containerDropdownElement.className
+//                                             .replace(' show', '');
+//   }
+// };
 
-/**
-* event on selected the language
-*/
-const onLanguageSelect = (player, language, selected) => {
-  const items = player.el().getElementsByClassName('vjs-language-switch-item');
+// /**
+// * event on selected the language
+// */
+// const onLanguageSelect = (player, language, selected) => {
+//   const items = player.el().getElementsByClassName('vjs-language-switch-item');
 
-  Array.from(items).forEach((item) => {
-    item.classList.remove('vjs-selected');
+//   Array.from(items).forEach((item) => {
+//     item.classList.remove('vjs-selected');
 
-    if (item.innerHTML === language.name) {
-      item.classList.add('vjs-selected');
-    }
-  });
+//     if (item.innerHTML === language.name) {
+//       item.classList.add('vjs-selected');
+//     }
+//   });
 
-  let currentTime = player.currentTime();
+//   let currentTime = player.currentTime();
 
-  const selectedCurrentSource = player.currentSources().filter((src) => {
-    if (src.selected) {
-      return src.selected === true;
-    }
-    return;
-  });
+//   const selectedCurrentSource = player.currentSources().filter((src) => {
+//     if (src.selected) {
+//       return src.selected === true;
+//     }
+//     return;
+//   });
 
-  if (selectedCurrentSource.length) {
-    const currenSelectedType = selectedCurrentSource[0].type;
-    const currenSelectedQuality = selectedCurrentSource[0].label;
+//   if (selectedCurrentSource.length) {
+//     const currenSelectedType = selectedCurrentSource[0].type;
+//     const currenSelectedQuality = selectedCurrentSource[0].label;
 
-    /* move selected src to the first place in the array */
-    /* because that the one which will be automaticaly played by the player */
-    const orderedSouces = language.sources;
+//     /* move selected src to the first place in the array */
+//     /* because that the one which will be automaticaly played by the player */
+//     const orderedSouces = language.sources;
 
-    language.sources.map((src, index) => {
-      if (src.label === currenSelectedQuality && src.type === currenSelectedType) {
-        const selectedSrc = orderedSouces.splice(index, 1);
+//     language.sources.map((src, index) => {
+//       if (src.label === currenSelectedQuality && src.type === currenSelectedType) {
+//         const selectedSrc = orderedSouces.splice(index, 1);
 
-        orderedSouces.unshift(selectedSrc[0]);
-      }
-    });
-  }
+//         orderedSouces.unshift(selectedSrc[0]);
+//       }
+//     });
+//   }
 
-  player.src(language.sources.map(function(src, index) {
-    const defaultSrcData =
-    { src: src.src, type: src.type, res: src.res, label: src.label };
+//   player.src(language.sources.map(function(src, index) {
+//     const defaultSrcData =
+//     { src: src.src, type: src.type, res: src.res, label: src.label };
 
-    if (!selectedCurrentSource.length && index === 0) {
-      return Object.assign(defaultSrcData, { selected: true });
-    }
+//     if (!selectedCurrentSource.length && index === 0) {
+//       return Object.assign(defaultSrcData, { selected: true });
+//     }
 
-    return defaultSrcData;
-  }));
+//     return defaultSrcData;
+//   }));
 
-  player.trigger('changedlanguage', language.sources);
+//   player.trigger('changedlanguage', language.sources);
 
-  player.on('loadedmetadata', function() {
-    player.currentTime(currentTime);
-    player.play();
-  });
+//   player.on('loadedmetadata', function() {
+//     player.currentTime(currentTime);
+//     player.play();
+//   });
 
-  containerDropdownElement.classList.remove('show');
-};
+//   containerDropdownElement.classList.remove('show');
+// };
 
 /**
  * Function to invoke when the player is ready.
@@ -90,26 +90,19 @@ const onLanguageSelect = (player, language, selected) => {
  */
 const onPlayerReady = (player, options) => {
 
-  // LanguageMenuButton.createItems( function() {
+  LanguageMenuButton.prototype.createItems = function() {
 
-  //     const menuItems = [];
-  //     const labels = (this.sources && this.sources.label) || {};
+      const menuItems = [];
+      const labels = (this.sources && this.sources.label) || {};
 
-  //     // FIXME order is not guaranteed here.
-  //     // for (var key in labels) {
-  //     //   if (labels.hasOwnProperty(key)) {
-  //     //     menuItems.push(new ResolutionMenuItem(
-  //     //       this.player_,
-  //     //       {
-  //     //         label: key,
-  //     //         src: labels[key],
-  //     //         selected: key === (this.currentSelection ? this.currentSelection.label : false)
-  //     //       })
-  //     //     );
-  //     //   }
-  //     // }
-  //     return menuItems;
-  //   });
+      options.languages.map( language => {
+        return new LanguageMenuItem(player, {
+               source: language.sources,
+               label: language.name,
+               selected: true
+            });
+      })
+    };
 
 
   player.getChild('controlBar').addChild('LanguageMenuButton', options, 2);
