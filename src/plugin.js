@@ -1,4 +1,6 @@
 import videojs from 'video.js';
+import LanguageMenuButton from './menuButton.js';
+import LanguageMenuItem from './menuItem.js';
 
 // Default options for the plugin.
 const defaults = {
@@ -87,76 +89,108 @@ const onLanguageSelect = (player, language, selected) => {
  * @param    {Object} [options={}]
  */
 const onPlayerReady = (player, options) => {
-  containerDropdownElement = document.createElement('div');
-  containerDropdownElement.className = 'vjs-menu';
 
-  let containerElement = document.createElement('div');
+  // LanguageMenuButton.createItems( function() {
 
-  containerElement.className = `vjs-menu-button vjs-menu-button-popup
-                                vjs-control vjs-button vjs-language-container`;
+  //     const menuItems = [];
+  //     const labels = (this.sources && this.sources.label) || {};
 
-  let menu = document.createElement('div');
+  //     // FIXME order is not guaranteed here.
+  //     // for (var key in labels) {
+  //     //   if (labels.hasOwnProperty(key)) {
+  //     //     menuItems.push(new ResolutionMenuItem(
+  //     //       this.player_,
+  //     //       {
+  //     //         label: key,
+  //     //         src: labels[key],
+  //     //         selected: key === (this.currentSelection ? this.currentSelection.label : false)
+  //     //       })
+  //     //     );
+  //     //   }
+  //     // }
+  //     return menuItems;
+  //   });
 
-  menu.className = 'vjs-menu';
 
-  let ulElement = document.createElement('ul');
+  player.getChild('controlBar').addChild('LanguageMenuButton', options, 2);
 
-  document.addEventListener('touchend', function(el) {
-    el.stopPropagation();
-    if (el.target.classList.contains('vjs-language-switch-button')) {
-      onToggleDropdown();
-    } else {
-      containerDropdownElement.classList.remove('show');
-    }
-  });
+  // const menuItem = videojs.extend(Item, {
+  //   //constructor: function(player, options) {
+  //   constructor: function() {
+  //     const boom = [{'item': 1}, {'bo': 0}];
+  //     console.log(boom)
+  //     Item.call(this, player, options);
+  //     // Item.apply(this, boom);
+  //     //this.addClass('vjs-chapters-button');
+  //     this.addClass('vjs-menu-button');
+  //     this.controlText("Previous");
+  //   }
+  // });
 
-  ulElement.className = 'vjs-menu-content';
 
-  options.languages.map(function(language) {
-    let liElement = document.createElement('li');
 
-    liElement.innerText = language.name;
+  // let menu = document.createElement('div');
 
-    if (language.name === options.defaultLanguage) {
-      liElement.className = 'vjs-menu-item vjs-selected vjs-language-switch-item';
-    } else {
-      liElement.className = 'vjs-menu-item vjs-language-switch-item';
-    }
+  // menu.className = 'vjs-menu';
 
-    liElement.addEventListener('click', function(el) {
-      onLanguageSelect(player, language, el.target);
-    });
+  // let ulElement = document.createElement('ul');
 
-    liElement.addEventListener('touchstart', function(el) {
-      onLanguageSelect(player, language, el.target);
-    });
+  // document.addEventListener('touchend', function(el) {
+  //   el.stopPropagation();
+  //   if (el.target.classList.contains('vjs-language-switch-button')) {
+  //     onToggleDropdown();
+  //   } else {
+  //     containerDropdownElement.classList.remove('show');
+  //   }
+  // });
 
-    ulElement.appendChild(liElement);
-  });
+  // ulElement.className = 'vjs-menu-content';
 
-  let textElement = document.createElement('span');
+  // options.languages.map(function(language) {
+  //   let liElement = document.createElement('li');
 
-  textElement.innerText = 'Language';
-  textElement.className = 'vjs-control-text';
+  //   liElement.innerText = language.name;
 
-  let iconElement = document.createElement('span');
+  //   if (language.name === options.defaultLanguage) {
+  //     liElement.className = 'vjs-menu-item vjs-selected vjs-language-switch-item';
+  //   } else {
+  //     liElement.className = 'vjs-menu-item vjs-language-switch-item';
+  //   }
 
-  const defaultBtnClass = 'vjs-language-switch-button ';
+  //   liElement.addEventListener('click', function(el) {
+  //     onLanguageSelect(player, language, el.target);
+  //   });
 
-  iconElement.className = defaultBtnClass.concat(options.buttonClass);
+  //   liElement.addEventListener('touchstart', function(el) {
+  //     onLanguageSelect(player, language, el.target);
+  //   });
 
-  containerDropdownElement.appendChild(ulElement);
+  //   ulElement.appendChild(liElement);
+  // });
 
-  containerElement.appendChild(containerDropdownElement);
-  containerElement.appendChild(textElement);
-  containerElement.appendChild(iconElement);
+  // let textElement = document.createElement('span');
 
-  player.controlBar.el().insertBefore(
-    containerElement,
-    player.controlBar.fullscreenToggle.el()
-  );
+  // textElement.innerText = 'Language';
+  // textElement.className = 'vjs-control-text';
 
-  player.addClass('vjs-language-switch');
+  // let iconElement = document.createElement('span');
+
+  // const defaultBtnClass = 'vjs-language-switch-button ';
+
+  // iconElement.className = defaultBtnClass.concat(options.buttonClass);
+
+  // containerDropdownElement.appendChild(ulElement);
+
+  // containerElement.appendChild(containerDropdownElement);
+  // containerElement.appendChild(textElement);
+  // containerElement.appendChild(iconElement);
+
+  // player.controlBar.el().insertBefore(
+  //   containerElement,
+  //   player.controlBar.fullscreenToggle.el()
+  // );
+
+  // player.addClass('vjs-language-switch');
 };
 
 /**
@@ -176,6 +210,8 @@ const languageSwitch = function(options) {
     onPlayerReady(this, videojs.mergeOptions(defaults, options));
   });
 };
+
+videojs.registerComponent('LanguageMenuButton', LanguageMenuButton);
 
 // Register the plugin with video.js.
 videojs.registerPlugin('languageSwitch', languageSwitch);
