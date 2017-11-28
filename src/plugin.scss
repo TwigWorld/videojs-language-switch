@@ -1,10 +1,12 @@
-.video-js {
-  .vjs-icon-cog {
-    font-size: 1.4em;
-    line-height: 2;
-  }
+.vjs-language-switch {
+    .vjs-icon-placeholder {
+        font-family: 'VideoJS';
+        font-weight: normal;
+        font-style: normal;
+
+        &:before {
+            content: "\F110";
+        }
+    }
 }
 
-.vjs-menu-button .vjs-menu.show {
-    display: block;
-}

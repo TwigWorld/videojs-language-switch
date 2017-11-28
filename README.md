@@ -70,7 +70,7 @@ The name property used for each language will be what appears within the menu it
 </script>
 ```
 
-You can provide an option for `buttonClass` which will add a CSS class to the button element so that you can style it as you wish.
+You can provide an option for `buttonClass` which will add a CSS class to the button icon placeholder element so that you can style it as you wish.
 
 
 ```
@@ -79,6 +79,18 @@ You can provide an option for `buttonClass` which will add a CSS class to the bu
       ...
     ],
     buttonClass: 'icon-globe' // Default
+  });
+```
+
+You can also provide an option for `positionIndex` which will position button among the control bar items. Some of the default control bar items are hidden so you need to inspect the bar to find correct index.
+
+
+```
+  player.languageSwitch({
+    languages: [
+      ...
+    ],
+    positionIndex: 5 // Default - item added at the end of the item list.
   });
 ```
 
