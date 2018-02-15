@@ -23,7 +23,7 @@ class LanguageMenuButton extends MenuButton {
     const iconPlaceholder = this.el_.childNodes[0].children[0];
     const iconClass = options.buttonClass || 'icon-globe';
 
-    iconPlaceholder.classList.add(iconClass);
+    iconPlaceholder.className += ' ' + iconClass;
   }
 
   createItems() {
