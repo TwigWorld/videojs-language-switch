@@ -193,6 +193,25 @@ QUnit.test('add custom icon class', function(assert) {
   );
 });
 
+QUnit.test('add custom multiple icon classes', function(assert) {
+  assert.expect(1);
+
+  const testDataWithIcon = Object.assign(
+    testData,
+    { buttonClass: 'icon icon-test' }
+  );
+
+  this.player.languageSwitch(testDataWithIcon);
+
+  // Tick the clock forward enough to trigger the player to be "ready".
+  this.clock.tick(1);
+
+  assert.ok(
+    this.player.contentEl().getElementsByClassName('vjs-icon-placeholder icon icon-test'),
+    'the icon placeholder element has additional classes'
+  );
+});
+
 QUnit.test('place the plug in button in correct index in the control bar',
 function(assert) {
   assert.expect(1);
