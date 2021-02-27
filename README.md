@@ -94,6 +94,47 @@ You can also provide an option for `positionIndex` which will position button am
   });
 ```
 
+In addition to that, there is the option `defaultLanguage` which can be used to define the default language upon the first initalization of the player. By setting the option, the player automatically loads the desired language to the player and selects it.
+
+```html
+  player.languageSwitch({
+    defaultLanguage: 'Portuguese',
+    languages: [
+      {
+        name: 'English',
+        sources: [
+          {
+            src: 'http://bit.ly/2iJXRec',
+            type: 'video/mp4',
+            res: 'Medium'
+          },
+          {
+            src: 'http://bit.ly/2jxmfwI',
+            type: 'video/webm',
+            res: 'Medium'
+          }
+        ]
+      },
+      {
+        name: 'Portuguese',
+        sources: [
+          {
+            src: 'http://bit.ly/2jVlmho',
+            type: 'video/mp4',
+            res: 'Medium'
+          },
+          {
+            src: 'http://bit.ly/2jVlTzx',
+            type: 'video/webm',
+            res: 'Medium'
+          }
+        ]
+      }
+    ]
+  });
+```
+
+
 ### Browserify
 
 When using with Browserify, install videojs-language-switch via npm and `require` the plugin as you would any other module.
