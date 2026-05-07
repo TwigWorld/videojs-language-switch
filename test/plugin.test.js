@@ -59,12 +59,12 @@ QUnit.test('registers itself with video.js', function(assert) {
   );
 
   const languageSwitchItemsLenght = this.player.contentEl()
-  .getElementsByClassName('vjs-language-switch').item(0)
-  .getElementsByTagName('li').length;
+    .getElementsByClassName('vjs-language-switch').item(0)
+    .getElementsByTagName('li').length;
 
   assert.ok(
     languageSwitchItemsLenght === 2,
-      'menu should include 2 to items'
+    'menu should include 2 to items'
   );
 });
 
@@ -85,7 +85,7 @@ QUnit.test('should select default language menu item', function(assert) {
   );
 
   const selectedLanguageText = menuItems.item(0)
-  .getElementsByClassName('vjs-menu-item-text').item(0).innerHTML;
+    .getElementsByClassName('vjs-menu-item-text').item(0).innerHTML;
 
   assert.equal(
     selectedLanguageText, 'English',
@@ -112,7 +112,8 @@ QUnit.test('should select language menu item on click', function(assert) {
   );
 });
 
-QUnit.test('should trigger \'changedlanguage\' event on language change',
+QUnit.test(
+  'should trigger \'changedlanguage\' event on language change',
   function(assert) {
     const done = assert.async();
 
@@ -123,8 +124,10 @@ QUnit.test('should trigger \'changedlanguage\' event on language change',
     );
 
     this.player.on('changedlanguage', function(event, payload) {
-      assert.deepEqual(payload,
-      selectedOptions, 'Passes languages as payload');
+      assert.deepEqual(
+        payload,
+        selectedOptions, 'Passes languages as payload'
+      );
       done();
     });
 
@@ -137,7 +140,8 @@ QUnit.test('should trigger \'changedlanguage\' event on language change',
       .getElementsByClassName('vjs-language-switch__item')[1];
 
     notSelectedItem.click();
-  });
+  }
+);
 
 QUnit.test('should add selected attribute to selected/played src', function(assert) {
   assert.expect(1);
@@ -212,28 +216,30 @@ QUnit.test('add custom multiple icon classes', function(assert) {
   );
 });
 
-QUnit.test('place the plug in button in correct index in the control bar',
-function(assert) {
-  assert.expect(1);
+QUnit.test(
+  'place the plug in button in correct index in the control bar',
+  function(assert) {
+    assert.expect(1);
 
-  const testDataWithIcon = Object.assign(
-    testData,
-    { positionIndex: 12 }
-  );
+    const testDataWithIcon = Object.assign(
+      testData,
+      { positionIndex: 12 }
+    );
 
-  this.player.languageSwitch(testDataWithIcon);
+    this.player.languageSwitch(testDataWithIcon);
 
-  // Tick the clock forward enough to trigger the player to be "ready".
-  this.clock.tick(1);
+    // Tick the clock forward enough to trigger the player to be "ready".
+    this.clock.tick(1);
 
-  const languageSwitchButton = this.player.contentEl()
-  .getElementsByClassName('vjs-language-switch')[0];
-  const controlBar = languageSwitchButton.parentNode;
-  const languageSwitchButtonIndex = Array.prototype.indexOf
-  .call(controlBar.children, languageSwitchButton);
+    const languageSwitchButton = this.player.contentEl()
+      .getElementsByClassName('vjs-language-switch')[0];
+    const controlBar = languageSwitchButton.parentNode;
+    const languageSwitchButtonIndex = Array.prototype.indexOf
+      .call(controlBar.children, languageSwitchButton);
 
-  assert.ok(
-    languageSwitchButtonIndex === 12,
-    'the language-select button has been placed in the provided position in control bar'
-  );
-});
+    assert.ok(
+      languageSwitchButtonIndex === 12,
+      'the language-select button has been placed in the provided position in control bar'
+    );
+  }
+);

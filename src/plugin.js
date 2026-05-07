@@ -19,7 +19,7 @@ const unselectItems = (player) => {
 
 const onLanguageSelect = (player, language, selected) => {
 
-  let currentTime = player.currentTime();
+  const currentTime = player.currentTime();
 
   player.activeLanguage = language.label;
 
@@ -68,6 +68,7 @@ const onLanguageSelect = (player, language, selected) => {
 
 /**
  * Function to invoke when the player is ready.
+ *
  * @function onPlayerReady
  * @param    {Player} player
  * @param    {Object} [options={}]
@@ -78,7 +79,7 @@ const onPlayerReady = (player, options) => {
   });
 
   player.getChild('controlBar')
-  .addChild('LanguageMenuButton', options, options.positionIndex);
+    .addChild('LanguageMenuButton', options, options.positionIndex);
 };
 
 /**
