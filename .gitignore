@@ -30,6 +30,10 @@ node_modules/
 
 # Build-related directories
 dist/
+es/
+cjs/
 docs/api/
 es5/
 test/dist/
+.eslintcache
+.yo-rc.json
