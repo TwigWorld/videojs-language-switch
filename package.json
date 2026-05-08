@@ -1,5 +1,5 @@
 {
-  "name": "videojs-language-switch",
+  "name": "@twigeducation/videojs-language-switch",
   "version": "2.0.0",
   "description": "Control for switching between video language versions",
   "main": "cjs/plugin.js",
